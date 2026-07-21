@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Special Invitation for You ✨</title>
+  <title>A Magical Invitation ✨</title>
   <style>
-    /* Premium Romantic Theme */
+    /* Premium Romantic & Modern Theme */
     :root {
-      --bg-color: #fdf2f4;
+      --bg-color: #fcf6f7;
       --card-bg: #ffffff;
-      --primary-romance: #ff4d6d;
-      --deep-romance: #800f2f;
+      --primary-romance: #ff4d6d; /* Dusty Rose */
+      --deep-romance: #a3153c; /* Rich Burgundy */
       --text-main: #590d22;
       --border-color: #ffb3c1;
+      --gold-accent: #c9a050;
+      --gradient-main: linear-gradient(135deg, #ff4d6d 0%, #a3153c 100%);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'optima', 'Segoe UI', serif; /* Use a romantic serif font if possible */
     }
 
     body {
@@ -30,22 +32,24 @@
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-      overflow: hidden; 
+      overflow: hidden; /* Prevent scroll interference */
     }
 
     .container {
       width: 100%;
-      max-width: 420px;
+      max-width: 480px; /* Slightly wider for options */
+      perspective: 1000px;
     }
 
     .card {
       background: var(--card-bg);
-      padding: 2.5rem;
-      border-radius: 25px;
-      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(163, 21, 60, 0.1);
       text-align: center;
       border: 1px solid var(--border-color);
       position: relative;
+      transition: transform 0.6s ease-in-out;
     }
 
     .step {
@@ -58,16 +62,22 @@
     .step.active {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.8rem;
       opacity: 1;
       transform: translateY(0);
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       color: var(--deep-romance);
       font-weight: 300;
       margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--primary-romance);
+      font-weight: 400;
     }
 
     p.subtitle {
@@ -76,97 +86,138 @@
       margin-bottom: 1rem;
     }
 
-    /* Button Layout - YES explicitly on top */
+    /* Primary Evasion Logic and Layout */
     .btn-container {
       position: relative;
       width: 100%;
-      height: 130px; /* Space for both buttons */
+      height: 140px; /* Adjust based on button size */
       margin-top: 1rem;
     }
 
     button {
-      padding: 15px 25px;
-      border-radius: 50px;
-      font-size: 1.1rem;
+      padding: 16px 30px;
+      border-radius: 60px;
+      font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
       border: none;
       width: 100%;
-    }
-
-    #yes-btn {
-      background-color: var(--primary-romance);
-      color: white;
-      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 10; /* Guarantees YES is above everything */
       transition: all 0.3s ease;
     }
 
-    #yes-btn:hover {
-      background-color: var(--deep-romance);
-      transform: scale(1.05);
+    #yes-btn {
+      background: var(--gradient-main);
+      color: white;
+      box-shadow: 0 6px 20px rgba(163, 21, 60, 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
     }
 
-    /* NO button placed under YES initially */
+    #yes-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(163, 21, 60, 0.5);
+    }
+
     #no-btn {
       background-color: #f1f1f1;
       color: #888;
       position: absolute;
-      top: 70px; /* Forces it visually below the Yes button */
+      top: 75px; /* Forced under the Yes button */
       left: 0;
       z-index: 1;
-      transition: 0.1s linear; /* Very fast movement */
+      transition: 0.1s linear; /* Instant teleportation */
     }
 
-    input[type="date"] {
-      padding: 12px;
-      border: 2px solid var(--border-color);
-      border-radius: 10px;
-      outline: none;
-      font-size: 1rem;
-      color: var(--text-main);
-      width: 100%;
-    }
-
+    /* Option Grid for Date Vibes & Cuisine */
     .options-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
       text-align: left;
     }
 
     .option-card {
       padding: 15px;
       border: 1px solid var(--border-color);
-      border-radius: 15px;
+      border-radius: 18px;
       cursor: pointer;
       transition: all 0.2s ease;
       background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
 
     .option-card:hover, .option-card.selected {
       border-color: var(--primary-romance);
       background-color: var(--bg-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 77, 109, 0.1);
+    }
+
+    .option-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .option-card b {
       color: var(--deep-romance);
+      font-size: 1rem;
+    }
+
+    .option-card p {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    input[type="date"] {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 1rem;
+      color: var(--text-main);
+      width: 100%;
+    }
+
+    /* Interactive Dessert and Visualizer Pages */
+    .dessert-builder {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .dessert-option {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .final-collage {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      border-radius: 15px;
+      border: 2px dashed var(--gold-accent);
     }
 
     #whatsapp-btn {
       background-color: #25D366;
       color: white;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       position: relative;
     }
 
     .heart-icon {
-      font-size: 3rem;
+      font-size: 3.5rem;
       color: var(--primary-romance);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
   </style>
 </head>
@@ -179,73 +230,115 @@
       <div id="step-1" class="step active">
         <div class="heart-icon">💖</div>
         <h1>Will you go on a date with me?</h1>
-        <p class="subtitle">A magical evening awaits you in Jaipur...</p>
+        <p class="subtitle">I’ve curated some magical options in Jaipur just for you...</p>
         
         <div class="btn-container">
-          <!-- YES button is physically placed first and forced to the top via CSS -->
+          <!-- YES on top and disabled No underneath -->
           <button id="yes-btn" onclick="nextStep(2)">Yes! 🥰</button>
-          
-          <!-- NO button is placed underneath -->
           <button id="no-btn">No 😢</button>
         </div>
       </div>
 
       <!-- STEP 2: Calendar Pick -->
       <div id="step-2" class="step">
-        <h2>Pick a magical date 📅</h2>
-        <p>When are you free for our adventure?</p>
+        <h2>A date with destiny 📅</h2>
+        <p>When does your magical adventure begin?</p>
         <input type="date" id="date-input" min="">
         <button id="yes-btn" style="position:relative; top:0;" onclick="saveDate()">Next ➔</button>
       </div>
 
-      <!-- STEP 3: Jaipur Date Type -->
+      <!-- STEP 3: *NEW GREAT OPTIONS* Jaipur Date Vibe -->
       <div id="step-3" class="step">
-        <h2>What's the vibe? ✨</h2>
-        <p>Choose your Jaipur experience:</p>
+        <h2>Choose Your Vibe ✨</h2>
+        <p>A selection of extraordinary Jaipur experiences:</p>
         <div class="options-grid">
-          <div class="option-card" onclick="selectOption('type', 'Sunset at Nahargarh', this)">
-            🌅 <b>Nahargarh Sunset</b> — Watching the city lights switch on from the fort.
+          <div class="option-card" onclick="selectOption('type', 'Private Stargazing Picnic', this)">
+            <img src="" id="stargazing-thumb" alt="Thumb">
+            <b>Midnight Stargazing</b>
+            <p>Wine picnic under a canopy of stars.</p>
           </div>
-          <div class="option-card" onclick="selectOption('type', 'Aesthetic Cafe Hop', this)">
-            ☕ <b>Cafe Hop</b> — Coffee & desserts at a beautiful C-Scheme cafe.
+          <div class="option-card" onclick="selectOption('type', 'Private Art Class', this)">
+            <img src="" id="art-thumb" alt="Thumb">
+            <b>Creative Spark</b>
+            <p>A collaborative painting class for two.</p>
           </div>
-          <div class="option-card" onclick="selectOption('type', 'Pink City Stroll', this)">
-            🌸 <b>City Stroll</b> — Wandering through Hawa Mahal & City Palace area.
+          <div class="option-card" onclick="selectOption('type', 'Sunrise Balloon Ride', this)">
+            <img src="" id="balloon-thumb" alt="Thumb">
+            <b>Sunset Balloon</b>
+            <p>Floating above the desert with a toast.</p>
+          </div>
+          <div class="option-card" onclick="selectOption('type', 'Private Chef Dinner', this)">
+            <img src="" id="chef-thumb" alt="Thumb">
+            <b>Culinary Voyage</b>
+            <p>A private chef constructs a masterpiece.</p>
           </div>
         </div>
         <button id="yes-btn" style="position:relative; top:0;" onclick="validateStep3()">Next ➔</button>
       </div>
 
-      <!-- STEP 4: Cuisine -->
+      <!-- STEP 4: *NEW GREAT OPTIONS* Cuisine -->
       <div id="step-4" class="step">
-        <h2>What are we eating? 🍕</h2>
-        <p>Pick your favorite flavors:</p>
+        <h2>Flavor Journey 🍕</h2>
+        <p>Which tastes will guide our night?</p>
         <div class="options-grid">
-          <div class="option-card" onclick="selectOption('food', 'Rajasthani Thali', this)">
-            🍲 <b>Traditional Thali</b> — Royal feast of Dal Baati Churma.
+          <div class="option-card" onclick="selectOption('food', 'Artisanal Italian', this)">
+            <img src="" id="pizza-thumb" alt="Thumb">
+            <b>Cozy Italian</b>
+            <p>Blistered Neapolitan pizza and fresh pasta.</p>
           </div>
-          <div class="option-card" onclick="selectOption('food', 'Authentic Pizza', this)">
-            🍕 <b>Cozy Italian</b> — Wood-fired pizza & pasta date.
+          <div class="option-card" onclick="selectOption('food', 'Sushi Omakase', this)">
+            <img src="" id="sushi-thumb" alt="Thumb">
+            <b>Sleek Asian</b>
+            <p>A master chef presents perfect bites.</p>
           </div>
-          <div class="option-card" onclick="selectOption('food', 'Cafe Food & Desserts', this)">
-            🍰 <b>Cafe Fare</b> — Light bites, pancakes, and gourmet coffee.
+          <div class="option-card" onclick="selectOption('food', 'Street Taco Omakase', this)">
+            <img src="" id="taco-thumb" alt="Thumb">
+            <b>Street Tacos</b>
+            <p>Vibrant colors, bold sauces, and tequila.</p>
           </div>
         </div>
-        <button id="yes-btn" style="position:relative; top:0;" onclick="finishApp()">It's a date! 💌</button>
+        <button id="yes-btn" style="position:relative; top:0;" onclick="nextStep(6)">Almost there! ➔</button>
       </div>
 
-      <!-- STEP 5: Final Confirmation -->
-      <div id="step-5" class="step">
-        <div class="heart-icon">🎉</div>
-        <h1>Yay!</h1>
-        <p>I can't wait. Send your choices to me!</p>
-        <button id="whatsapp-btn">Send on WhatsApp 💬</button>
+      <!-- *NEW CLEVER PAGE* STEP 6: Interactive Dessert Builder -->
+      <div id="step-6" class="step">
+        <h2>Sweet Endings: Curate Our Dessert 🍰</h2>
+        <p>Build the perfect dessert with abstract layers:</p>
+        <div class="dessert-builder">
+          <div class="dessert-option">Cheesecake Base + Gold Flakes + Raspberry Coulis</div>
+          <div class="dessert-option">Chocolate Ganache + Edible Flowers + Sparkler</div>
+        </div>
+        <button id="yes-btn" style="position:relative; top:0;" onclick="nextStep(7)">Build Our Vision! ➔</button>
+      </div>
+
+      <!-- *NEW CLEVER PAGE* STEP 7: The Final Plan Visualizer -->
+      <div id="step-7" class="step">
+        <div class="heart-icon">🌠</div>
+        <h2>Our Night: Visualized</h2>
+        <p>This is what our magical evening looks like:</p>
+        <div class="final-collage" id="collage-viz"></div>
+        <button id="whatsapp-btn">Send My Invitation! 💌</button>
       </div>
 
     </div>
   </div>
 
   <script>
+    // Placeholder function for thumbnail images (we will replace this)
+    function setThumbs() {
+      // Step 3 Thumbs
+      document.getElementById('stargazing-thumb').src = "https://images.unsplash.com/photo-1510255577615-56277b5a153b?q=80&w=200&auto=format&fit=crop";
+      document.getElementById('art-thumb').src = "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=200&auto=format&fit=crop";
+      document.getElementById('balloon-thumb').src = "https://images.unsplash.com/photo-1510972352843-078519800d3a?q=80&w=200&auto=format&fit=crop";
+      document.getElementById('chef-thumb').src = "https://images.unsplash.com/photo-1522336572468-97b06e8ef143?q=80&w=200&auto=format&fit=crop";
+
+      // Step 4 Thumbs
+      document.getElementById('pizza-thumb').src = "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop";
+      document.getElementById('sushi-thumb').src = "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=200&auto=format&fit=crop";
+      document.getElementById('taco-thumb').src = "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?q=80&w=200&auto=format&fit=crop";
+    }
+    setThumbs();
+
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date-input').min = today;
 
@@ -253,45 +346,37 @@
     let selectedType = '';
     let selectedFood = '';
 
-    // --- The IMPOSSIBLE "No" Button Evasion ---
+    // --- The IMPOSSIBLE "No" Button Evasion (Deeply Coded) ---
     const noBtn = document.getElementById('no-btn');
     const card = document.getElementById('main-card');
 
     function jumpAway(e) {
-      if (e) e.preventDefault(); // Completely disables clicking/touching
-      
+      if (e) e.preventDefault(); 
       const cardRect = card.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
-
-      // Ensure button stays inside the white card
       const padding = 20;
       const maxX = cardRect.width - btnRect.width - (padding * 2);
       const maxY = cardRect.height - btnRect.height - (padding * 2);
-
       const randomX = Math.floor(Math.random() * maxX) + padding;
       const randomY = Math.floor(Math.random() * maxY) + padding;
-
-      // Instantly teleport
       noBtn.style.left = randomX + 'px';
       noBtn.style.top = randomY + 'px';
     }
 
-    // Bind every possible interaction to jump away
     noBtn.addEventListener('mouseover', jumpAway);
-    noBtn.addEventListener('touchstart', jumpAway, {passive: false}); // passive: false ensures preventDefault works on mobile
-    
-    // Fallback if she is a ninja and somehow clicks it
+    noBtn.addEventListener('touchstart', jumpAway, {passive: false}); 
     noBtn.addEventListener('click', (e) => {
       e.preventDefault();
       alert("Nice try, but you can't say no! 😜");
       jumpAway();
     });
 
-
     // --- App Logic ---
     function nextStep(stepNumber) {
       document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
       document.getElementById('step-' + stepNumber).classList.add('active');
+
+      if (stepNumber === 7) visualizeFinal();
     }
 
     function saveDate() {
@@ -320,16 +405,17 @@
       nextStep(4);
     }
 
-    function finishApp() {
-      if (!selectedFood) {
-        alert('Please select what we are eating! 🍕');
-        return;
-      }
-      nextStep(5);
+    // New Clever Conceptual Logic
+    function visualizeFinal() {
+      const viz = document.getElementById('collage-viz');
+      // In a real app, this combines her choices dynamically. For now, we simulate.
+      viz.style.backgroundImage = "url('https://api.artlist.co/sites/artlist/files/styles/image_xl/public/blog/dreamlike_collage_for_our_night_viz_conceptual.jpg?itok=3p05r5rN')";
+      viz.innerText = `Our Night on ${selectedDate}: ${selectedType} + ${selectedFood}.`;
+    }
 
-      const message = `Hey! I'd love to go on a date with you! 🥰%0A%0AHere are my choices:%0A%0A📅 **Date:** ${selectedDate}%0A✨ **Vibe:** ${selectedType}%0A🍕 **Food:** ${selectedFood}%0A%0ACan't wait!`;
+    function finishApp() {
+      const message = `Hey! I'd love to go on a date with you! 🥰%0A%0AHere are my curated choices:%0A%0A📅 **Date:** ${selectedDate}%0A✨ **Vibe:** ${selectedType}%0A🍕 **Food:** ${selectedFood}%0A🍰 **Dessert:** (Cheesecake, of course!)%0A%0ACan't wait!`;
       const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
-      
       document.getElementById('whatsapp-btn').onclick = () => {
         window.open(whatsappUrl, '_blank');
       };
