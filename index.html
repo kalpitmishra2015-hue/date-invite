@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Special Invitation for You ✨</title>
   <style>
-    /* Premium Romantic Theme & Global Styles */
+    /* Premium Romantic Theme */
     :root {
-      --bg-color: #fdf2f4; /* Softest pink */
+      --bg-color: #fdf2f4;
       --card-bg: #ffffff;
-      --primary-romance: #ff4d6d; /* Dusty Rose */
-      --deep-romance: #800f2f; /* Burgundy */
+      --primary-romance: #ff4d6d;
+      --deep-romance: #800f2f;
       --text-main: #590d22;
-      --gold-accent: #c9a050;
       --border-color: #ffb3c1;
     }
 
@@ -20,7 +19,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'optima', 'Segoe UI', serif; /* Use a romantic serif font if possible */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body {
@@ -31,28 +30,24 @@
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-      overflow: hidden; /* Prevents scrolling when button jumps */
+      overflow: hidden; 
     }
 
     .container {
-      perspective: 1000px;
       width: 100%;
       max-width: 420px;
     }
 
-    /* Main Card Styling */
     .card {
       background: var(--card-bg);
       padding: 2.5rem;
       border-radius: 25px;
-      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.1);
+      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
       text-align: center;
       border: 1px solid var(--border-color);
-      transition: transform 0.6s ease;
       position: relative;
     }
 
-    /* Steps navigation logic */
     .step {
       display: none;
       opacity: 0;
@@ -68,7 +63,6 @@
       transform: translateY(0);
     }
 
-    /* Typography */
     h1 {
       font-size: 2.2rem;
       color: var(--deep-romance);
@@ -82,14 +76,12 @@
       margin-bottom: 1rem;
     }
 
-    /* The Buttons */
+    /* Button Layout - YES explicitly on top */
     .btn-container {
-      display: flex;
-      flex-direction: column-reverse; /* Crucial: No button is VISUALLY on top */
-      gap: 1rem;
-      margin-top: 2rem;
-      min-height: 120px; /* Space for jumping button */
       position: relative;
+      width: 100%;
+      height: 130px; /* Space for both buttons */
+      margin-top: 1rem;
     }
 
     button {
@@ -98,7 +90,6 @@
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
       border: none;
       width: 100%;
     }
@@ -106,26 +97,30 @@
     #yes-btn {
       background-color: var(--primary-romance);
       color: white;
-      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10; /* Guarantees YES is above everything */
+      transition: all 0.3s ease;
     }
 
     #yes-btn:hover {
       background-color: var(--deep-romance);
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
-    /* The Evading No Button */
+    /* NO button placed under YES initially */
     #no-btn {
       background-color: #f1f1f1;
       color: #888;
       position: absolute;
-      width: auto;
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
+      top: 70px; /* Forces it visually below the Yes button */
+      left: 0;
+      z-index: 1;
+      transition: 0.1s linear; /* Very fast movement */
     }
 
-    /* Input & Option Styling */
     input[type="date"] {
       padding: 12px;
       border: 2px solid var(--border-color);
@@ -161,14 +156,13 @@
       color: var(--deep-romance);
     }
 
-    /* WhatsApp Button */
     #whatsapp-btn {
       background-color: #25D366;
       color: white;
       margin-top: 1rem;
+      position: relative;
     }
 
-    /* Romantic Decorations (Simple) */
     .heart-icon {
       font-size: 3rem;
       color: var(--primary-romance);
@@ -187,12 +181,12 @@
         <h1>Will you go on a date with me?</h1>
         <p class="subtitle">A magical evening awaits you in Jaipur...</p>
         
-        <div class="btn-container" id="btn-container">
-          <!-- The Yes button is below in HTML, above visually -->
+        <div class="btn-container">
+          <!-- YES button is physically placed first and forced to the top via CSS -->
           <button id="yes-btn" onclick="nextStep(2)">Yes! 🥰</button>
           
-          <!-- The NO button is unclickable and evades -->
-          <button id="no-btn" onmouseover="evadeButton()" onclick="evadeButton()">No 😢</button>
+          <!-- NO button is placed underneath -->
+          <button id="no-btn">No 😢</button>
         </div>
       </div>
 
@@ -201,7 +195,7 @@
         <h2>Pick a magical date 📅</h2>
         <p>When are you free for our adventure?</p>
         <input type="date" id="date-input" min="">
-        <button id="yes-btn" onclick="saveDate()">Next ➔</button>
+        <button id="yes-btn" style="position:relative; top:0;" onclick="saveDate()">Next ➔</button>
       </div>
 
       <!-- STEP 3: Jaipur Date Type -->
@@ -218,11 +212,8 @@
           <div class="option-card" onclick="selectOption('type', 'Pink City Stroll', this)">
             🌸 <b>City Stroll</b> — Wandering through Hawa Mahal & City Palace area.
           </div>
-          <div class="option-card" onclick="selectOption('type', 'Stepwell Evening', this)">
-            🕍 <b>Stepwell Quiet</b> — A peaceful evening by an ancient stepwell.
-          </div>
         </div>
-        <button id="yes-btn" onclick="validateStep3()">Next ➔</button>
+        <button id="yes-btn" style="position:relative; top:0;" onclick="validateStep3()">Next ➔</button>
       </div>
 
       <!-- STEP 4: Cuisine -->
@@ -240,7 +231,7 @@
             🍰 <b>Cafe Fare</b> — Light bites, pancakes, and gourmet coffee.
           </div>
         </div>
-        <button id="yes-btn" onclick="finishApp()">It's a date! 💌</button>
+        <button id="yes-btn" style="position:relative; top:0;" onclick="finishApp()">It's a date! 💌</button>
       </div>
 
       <!-- STEP 5: Final Confirmation -->
@@ -255,7 +246,6 @@
   </div>
 
   <script>
-    // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date-input').min = today;
 
@@ -263,40 +253,42 @@
     let selectedType = '';
     let selectedFood = '';
 
-    // --- The Clever "No" Button Evasion ---
-    function evadeButton() {
-      const noBtn = document.getElementById('no-btn');
-      const container = document.getElementById('btn-container');
-      const card = document.getElementById('main-card');
+    // --- The IMPOSSIBLE "No" Button Evasion ---
+    const noBtn = document.getElementById('no-btn');
+    const card = document.getElementById('main-card');
+
+    function jumpAway(e) {
+      if (e) e.preventDefault(); // Completely disables clicking/touching
       
-      // Calculate boundaries based on the CARD, not viewport
       const cardRect = card.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
 
-      // Ensure the button stays somewhat centered and within the card padding
+      // Ensure button stays inside the white card
       const padding = 20;
       const maxX = cardRect.width - btnRect.width - (padding * 2);
       const maxY = cardRect.height - btnRect.height - (padding * 2);
 
-      // Generate random positions
       const randomX = Math.floor(Math.random() * maxX) + padding;
       const randomY = Math.floor(Math.random() * maxY) + padding;
 
-      // Apply the new position relative to the container
+      // Instantly teleport
       noBtn.style.left = randomX + 'px';
       noBtn.style.top = randomY + 'px';
-      noBtn.style.transform = 'none'; // Remove centering transform
     }
 
-    // Handle button events for mobile touch too
-    const noBtn = document.getElementById('no-btn');
-    noBtn.addEventListener('touchstart', (e) => {
-      e.preventDefault(); // Prevents clicking
-      evadeButton();
+    // Bind every possible interaction to jump away
+    noBtn.addEventListener('mouseover', jumpAway);
+    noBtn.addEventListener('touchstart', jumpAway, {passive: false}); // passive: false ensures preventDefault works on mobile
+    
+    // Fallback if she is a ninja and somehow clicks it
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert("Nice try, but you can't say no! 😜");
+      jumpAway();
     });
 
 
-    // --- Navigation Logic ---
+    // --- App Logic ---
     function nextStep(stepNumber) {
       document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
       document.getElementById('step-' + stepNumber).classList.add('active');
@@ -313,12 +305,9 @@
     }
 
     function selectOption(category, value, element) {
-      // Highlight selection
       const parent = element.parentElement;
       parent.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
       element.classList.add('selected');
-
-      // Save selection
       if (category === 'type') selectedType = value;
       if (category === 'food') selectedFood = value;
     }
@@ -331,7 +320,6 @@
       nextStep(4);
     }
 
-    // --- Finalization & WhatsApp Message ---
     function finishApp() {
       if (!selectedFood) {
         alert('Please select what we are eating! 🍕');
@@ -339,13 +327,9 @@
       }
       nextStep(5);
 
-      // Create the romantic message
       const message = `Hey! I'd love to go on a date with you! 🥰%0A%0AHere are my choices:%0A%0A📅 **Date:** ${selectedDate}%0A✨ **Vibe:** ${selectedType}%0A🍕 **Food:** ${selectedFood}%0A%0ACan't wait!`;
-      
-      // WhatsApp API Link
       const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
       
-      // Set the button action
       document.getElementById('whatsapp-btn').onclick = () => {
         window.open(whatsappUrl, '_blank');
       };
