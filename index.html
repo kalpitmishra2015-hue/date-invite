@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Crucial for mobile: locks width and prevents zooming -->
+  <!-- Strict mobile lock to prevent scrolling/zooming -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>A Perfect Day in Jaipur ✨</title>
+  <title>Our Perfect Day ✨</title>
   <style>
     :root {
       --bg-color: #ffe6ea;
@@ -22,14 +22,13 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Strict Mobile Lock - No Scrolling Allowed */
+    /* Fixed body to eliminate scroll completely */
     html, body {
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      position: fixed; /* Stops iOS rubber-banding */
+      position: fixed;
       background-color: var(--bg-color);
-      /* Custom repeating SVG light pink hearts */
       background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 20c-5-7-15-5-15 3 0 8 15 15 15 15s15-7 15-15c0-8-10-10-15-3z' fill='%23ffb3c6' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
     }
 
@@ -39,67 +38,61 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 15px;
+      padding: 10px;
     }
 
     .card {
       background: var(--card-bg);
       width: 100%;
-      max-width: 480px;
-      max-height: 95vh;
-      padding: 2rem;
-      border-radius: 25px;
-      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+      max-width: 450px;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
       text-align: center;
       border: 2px solid var(--border-color);
       backdrop-filter: blur(5px);
       position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     .step {
       display: none;
       opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      width: 100%;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      flex-direction: column;
+      gap: 0.8rem;
     }
 
     .step.active {
       display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
       opacity: 1;
       transform: translateY(0);
     }
 
     h1, h2 {
       color: var(--deep-romance);
-      margin-bottom: 0.2rem;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
 
     p.subtitle, p {
       color: var(--primary-romance);
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .btn-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       margin-top: 0.5rem;
       position: relative;
-      height: 125px; 
+      height: 110px; 
     }
 
     button {
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-size: 1.05rem;
+      padding: 12px 15px;
+      border-radius: 30px;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
       border: none;
@@ -107,22 +100,20 @@
       transition: all 0.2s ease;
     }
 
-    #yes-btn {
+    .primary-btn {
       background: linear-gradient(135deg, #ff4d6d 0%, #a3153c 100%);
       color: white;
-      box-shadow: 0 6px 20px rgba(163, 21, 60, 0.3);
+      box-shadow: 0 4px 15px rgba(163, 21, 60, 0.3);
       z-index: 10;
     }
 
-    #yes-btn:hover {
-      transform: scale(1.03);
-    }
+    .primary-btn:hover { transform: scale(1.03); }
 
     #no-btn {
       background-color: #f1f1f1;
       color: #777;
       position: absolute;
-      top: 65px;
+      top: 55px;
       left: 0;
       width: 100%;
       z-index: 1;
@@ -131,19 +122,19 @@
     .options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
     .option-card {
-      padding: 10px;
+      padding: 10px 8px;
       border: 2px solid var(--border-color);
-      border-radius: 15px;
+      border-radius: 12px;
       cursor: pointer;
       background: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       text-align: center;
       transition: all 0.2s;
     }
@@ -152,57 +143,70 @@
       border-color: var(--primary-romance);
       background-color: #fff0f3;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 77, 109, 0.15);
     }
 
-    .option-card img {
-      width: 100%;
-      height: 80px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
+    .option-emoji { font-size: 1.8rem; }
+    .option-card b { font-size: 0.85rem; color: var(--deep-romance); }
+    .option-card p { font-size: 0.65rem; color: #666; line-height: 1.1; }
 
-    .option-card b {
-      font-size: 0.9rem;
-      color: var(--deep-romance);
-    }
-
-    .option-card p {
-      font-size: 0.75rem;
-      color: #666;
-      line-height: 1.2;
-    }
-
-    input[type="date"] {
-      padding: 14px;
+    input[type="date"], select {
+      padding: 10px;
       border: 2px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 1rem;
       color: var(--text-main);
       width: 100%;
       text-align: center;
+      background: white;
     }
 
-    /* Boarding Pass - Mobile Optimized */
+    /* Street Food Checkboxes (Hidden by default) */
+    .street-food-container {
+      display: none;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 5px;
+    }
+    
+    .street-food-container.visible { display: flex; }
+
+    .food-chip {
+      background: #f1f1f1;
+      border: 1px solid #ddd;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .food-chip.active {
+      background: var(--primary-romance);
+      color: white;
+      border-color: var(--primary-romance);
+    }
+
+    /* Boarding Pass */
     .boarding-pass {
       display: flex;
       background: #fff;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       text-align: left;
       border: 1px solid #ddd;
       margin-top: 5px;
     }
 
     .pass-main {
-      padding: 15px;
+      padding: 12px;
       flex: 3;
       border-right: 2px dashed #ccc;
     }
 
     .pass-stub {
-      padding: 10px;
+      padding: 8px;
       flex: 1;
       background: #fff0f3;
       display: flex;
@@ -215,47 +219,24 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 2px solid var(--primary-romance);
-      padding-bottom: 8px;
-      margin-bottom: 12px;
+      padding-bottom: 5px;
+      margin-bottom: 8px;
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: var(--deep-romance);
     }
 
-    .pass-detail { margin-bottom: 8px; }
+    .pass-detail { margin-bottom: 5px; display: none; } /* Hidden if skipped */
+    .pass-detail.visible { display: block; }
+    .pass-label { font-size: 0.6rem; color: #888; text-transform: uppercase; }
+    .pass-value { font-size: 0.75rem; font-weight: bold; color: #333; }
 
-    .pass-label {
-      font-size: 0.65rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    #whatsapp-btn { background-color: #25D366; }
 
-    .pass-value {
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .barcode {
-      width: 100%;
-      height: 30px;
-      background: repeating-linear-gradient(90deg, #333, #333 2px, transparent 2px, transparent 4px, #333 4px, #333 5px, transparent 5px, transparent 8px);
-      margin-top: 10px;
-    }
-
-    #whatsapp-btn {
-      background-color: #25D366;
-      color: white;
-      margin-top: 0.5rem;
-    }
-
-    /* Adjust sizing for smaller iPhones/Androids */
     @media (max-height: 700px) {
-      .card { padding: 1.2rem; }
-      h1, h2 { font-size: 1.5rem; }
-      .option-card img { height: 60px; }
-      .step.active { gap: 0.8rem; }
+      .card { padding: 1rem; }
+      h1, h2 { font-size: 1.3rem; }
+      .option-emoji { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -267,109 +248,164 @@
       <!-- STEP 1: The Clever Question -->
       <div id="step-1" class="step active">
         <h1>Will you be my date? 💖</h1>
-        <p class="subtitle">I’ve planned a perfect, full day for us in Jaipur.</p>
-        
+        <p class="subtitle">I’ve planned a perfect Jaipur itinerary.</p>
         <div class="btn-container">
-          <button id="yes-btn" onclick="nextStep(2)">Yes! 🥰</button>
+          <button id="yes-btn" class="primary-btn" onclick="goToStep(2)">Yes! 🥰</button>
           <button id="no-btn">No 😢</button>
         </div>
       </div>
 
-      <!-- STEP 2: Calendar Pick -->
+      <!-- STEP 2: Timing -->
       <div id="step-2" class="step">
-        <h2>Save the Date 📅</h2>
-        <p>When does our adventure begin?</p>
+        <h2>When are we meeting? 📅</h2>
         <input type="date" id="date-input">
-        <button id="yes-btn" onclick="saveDate()">Lock it in ➔</button>
+        <select id="time-input">
+          <option value="" disabled selected>Select Meeting Time...</option>
+          <option value="Morning">Morning (Breakfast onwards)</option>
+          <option value="Afternoon">Afternoon (Lunch onwards)</option>
+          <option value="Evening">Evening (Cafe/Dinner onwards)</option>
+        </select>
+        <button class="primary-btn" onclick="startFlow()">Start Planning ➔</button>
       </div>
 
-      <!-- STEP 3: Breakfast & Morning -->
+      <!-- STEP 3: Breakfast -->
       <div id="step-3" class="step">
-        <h2>Morning Vibe 🌅</h2>
+        <h2>Breakfast Vibe 🌅</h2>
         <div class="options-grid">
-          <div class="option-card" onclick="selectOption('morning', 'Patrika Gate & Tapri Breakfast', this)">
-            <img src="https://images.unsplash.com/photo-1599661559905-4927161dc2d2?w=300&q=80" alt="Patrika Gate">
-            <b>Patrika Gate Stroll</b>
-            <p>Picturesque walk & Chai at Tapri Central.</p>
+          <div class="option-card" onclick="selectOption('breakfast', 'Rawat Mishtan Bhandar (Kachori)', this)">
+            <div class="option-emoji">🧅</div>
+            <b>Rawat Mishtan</b><p>Famous Pyaz Kachori</p>
           </div>
-          <div class="option-card" onclick="selectOption('morning', 'Jal Mahal Sunrise', this)">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80" alt="Jal Mahal">
-            <b>Jal Mahal Sunrise</b>
-            <p>Morning views with local Jalebi & Kachori.</p>
+          <div class="option-card" onclick="selectOption('breakfast', 'Tapri Central (Chai & Poha)', this)">
+            <div class="option-emoji">🫖</div>
+            <b>Tapri Central</b><p>Chai, Poha & Views</p>
+          </div>
+          <div class="option-card" onclick="selectOption('breakfast', 'Gulab Ji Chai Wale', this)">
+            <div class="option-emoji">🍞</div>
+            <b>Gulab Ji</b><p>Bun Maska & Chai</p>
+          </div>
+          <div class="option-card" onclick="selectOption('breakfast', 'TBD (You Suggest!)', this)">
+            <div class="option-emoji">🤷‍♀️</div>
+            <b>TBD</b><p>You decide!</p>
           </div>
         </div>
-        <button id="yes-btn" onclick="validateStep('morning', 4)">Next ➔</button>
+        <button class="primary-btn" onclick="goToStep(4)">Next ➔</button>
       </div>
 
-      <!-- STEP 4: Afternoon & Lunch (Veg Focus) -->
+      <!-- STEP 4: Lunch (Veg) -->
       <div id="step-4" class="step">
-        <h2>Afternoon Feast 🍲</h2>
+        <h2>Lunch Feast 🍲</h2>
         <div class="options-grid">
-          <div class="option-card" onclick="selectOption('afternoon', 'Authentic Rajasthani Thali', this)">
-            <img src="https://images.unsplash.com/photo-1589301760014-d929f39ce9b1?w=300&q=80" alt="Veg Thali">
-            <b>Royal Veg Thali</b>
-            <p>Massive traditional feast at a local favorite.</p>
+          <div class="option-card" onclick="selectOption('lunch', 'Govindam Retreat (Thali)', this)">
+            <div class="option-emoji">🍛</div>
+            <b>Govindam Retreat</b><p>Pure Veg Thali</p>
           </div>
-          <div class="option-card" onclick="selectOption('afternoon', 'Albert Hall & Cafe', this)">
-            <img src="https://images.unsplash.com/photo-1576092762791-dd9e2220c9d8?w=300&q=80" alt="Cafe Food">
-            <b>Museum & Cafe</b>
-            <p>Explore Albert Hall, then modern veg delights.</p>
+          <div class="option-card" onclick="selectOption('lunch', 'RJ 14 (South/North Veg)', this)">
+            <div class="option-emoji">🥘</div>
+            <b>RJ 14</b><p>Beautiful Veg Dining</p>
+          </div>
+          <div class="option-card" onclick="selectOption('lunch', 'LMB (Iconic Rajasthani)', this)">
+            <div class="option-emoji">🥗</div>
+            <b>LMB</b><p>Iconic Veg Flavors</p>
+          </div>
+          <div class="option-card" onclick="selectOption('lunch', 'TBD (You Suggest!)', this)">
+            <div class="option-emoji">🤷‍♀️</div>
+            <b>TBD</b><p>You decide!</p>
           </div>
         </div>
-        <button id="yes-btn" onclick="validateStep('afternoon', 5)">Next ➔</button>
+        <button class="primary-btn" onclick="goToStep(5)">Next ➔</button>
       </div>
 
-      <!-- STEP 5: Evening & Dinner -->
+      <!-- STEP 5: Cafe -->
       <div id="step-5" class="step">
+        <h2>Cafe & Chill ☕</h2>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('cafe', 'Curious Life Coffee', this)">
+            <div class="option-emoji">☕</div>
+            <b>Curious Life</b><p>Best Roasters</p>
+          </div>
+          <div class="option-card" onclick="selectOption('cafe', 'Town Coffee', this)">
+            <div class="option-emoji">🍰</div>
+            <b>Town Coffee</b><p>Aesthetic Vibes</p>
+          </div>
+          <div class="option-card" onclick="selectOption('cafe', 'Cafe Quaint', this)">
+            <div class="option-emoji">🥐</div>
+            <b>Cafe Quaint</b><p>Quiet & Artsy</p>
+          </div>
+          <div class="option-card" onclick="selectOption('cafe', 'TBD (You Suggest!)', this)">
+            <div class="option-emoji">🤷‍♀️</div>
+            <b>TBD</b><p>You decide!</p>
+          </div>
+        </div>
+        <button class="primary-btn" onclick="goToStep(6)">Next ➔</button>
+      </div>
+
+      <!-- STEP 6: Dinner -->
+      <div id="step-6" class="step">
         <h2>The Grand Finale 🌙</h2>
         <div class="options-grid">
-          <div class="option-card" onclick="selectOption('evening', 'Nahargarh & Bar Palladio', this)">
-            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&q=80" alt="Romantic Dinner">
-            <b>Sunset & Italian</b>
-            <p>Sunset views and luxury veg Italian dinner.</p>
+          <div class="option-card" onclick="selectOption('dinner', 'Steam, Rambagh Palace', this)">
+            <div class="option-emoji">🚂</div>
+            <b>Rambagh Steam</b><p>Luxury Lounge Pizza</p>
           </div>
-          <div class="option-card" onclick="selectOption('evening', 'Amer Fort & Royal Dinner', this)">
-            <img src="https://images.unsplash.com/photo-1591819385964-6017b20f4c39?w=300&q=80" alt="Fort Lights">
-            <b>Amer Lights</b>
-            <p>Glowing fort at night with an elegant veg dinner.</p>
+          <div class="option-card" onclick="selectOption('dinner', 'Street Food Crawl', this)">
+            <div class="option-emoji">🤤</div>
+            <b>Street Food</b><p>Let's eat everything!</p>
+          </div>
+          <div class="option-card" onclick="selectOption('dinner', 'TBD (You Suggest!)', this)">
+            <div class="option-emoji">🤷‍♀️</div>
+            <b>TBD</b><p>You decide!</p>
           </div>
         </div>
-        <button id="yes-btn" onclick="generatePass()">Generate Boarding Pass ✈️</button>
+
+        <!-- Street Food Multiple Selector -->
+        <div id="street-food-selector" class="street-food-container">
+          <div class="food-chip" onclick="toggleFood(this, 'Pav Bhaji')">Pav Bhaji</div>
+          <div class="food-chip" onclick="toggleFood(this, 'Pani Puri')">Pani Puri</div>
+          <div class="food-chip" onclick="toggleFood(this, 'Momos')">Momos</div>
+          <div class="food-chip" onclick="toggleFood(this, 'Raj Kachori')">Raj Kachori</div>
+          <div class="food-chip" onclick="toggleFood(this, 'Tikki Chaat')">Tikki Chaat</div>
+        </div>
+
+        <button class="primary-btn" onclick="generatePass()" style="margin-top:10px;">Generate Pass ✈️</button>
       </div>
 
-      <!-- STEP 6: The Boarding Pass -->
-      <div id="step-6" class="step">
-        <h2>Your Ticket is Ready! 🎉</h2>
+      <!-- STEP 7: Boarding Pass -->
+      <div id="step-7" class="step">
+        <h2>Your Ticket! 🎉</h2>
         <div class="boarding-pass">
           <div class="pass-main">
             <div class="pass-header">
               <span>ROMANCE AIRLINES</span>
               <span>VIP CLASS</span>
             </div>
-            <div class="pass-detail">
-              <div class="pass-label">Passenger</div>
-              <div class="pass-value">The Most Beautiful Girl</div>
-            </div>
-            <div class="pass-detail">
+            <div class="pass-detail visible">
               <div class="pass-label">Date</div>
               <div class="pass-value" id="pass-date">--</div>
             </div>
-            <div class="pass-detail">
-              <div class="pass-label">Morning</div>
-              <div class="pass-value" id="pass-morning">--</div>
+            <div class="pass-detail" id="row-breakfast">
+              <div class="pass-label">Breakfast</div>
+              <div class="pass-value" id="pass-breakfast">--</div>
             </div>
-            <div class="pass-detail">
-              <div class="pass-label">Evening</div>
-              <div class="pass-value" id="pass-evening">--</div>
+            <div class="pass-detail" id="row-lunch">
+              <div class="pass-label">Lunch</div>
+              <div class="pass-value" id="pass-lunch">--</div>
+            </div>
+            <div class="pass-detail" id="row-cafe">
+              <div class="pass-label">Cafe</div>
+              <div class="pass-value" id="pass-cafe">--</div>
+            </div>
+            <div class="pass-detail visible">
+              <div class="pass-label">Dinner</div>
+              <div class="pass-value" id="pass-dinner">--</div>
             </div>
           </div>
           <div class="pass-stub">
-            <div class="pass-label" style="text-align:center;">DEST</div>
-            <h3 style="color:var(--primary-romance); margin:10px 0; font-size:1.1rem;">JAIPUR</h3>
-            <div class="barcode"></div>
+            <div class="pass-label">DEST</div>
+            <h3 style="color:var(--primary-romance); margin:5px 0; font-size:1rem;">JAIPUR</h3>
           </div>
         </div>
-        <button id="whatsapp-btn">Send My Ticket 💌</button>
+        <button id="whatsapp-btn" class="primary-btn">Send My Ticket 💌</button>
       </div>
 
     </div>
@@ -379,40 +415,35 @@
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date-input').min = today;
 
-    let choices = { date: '', morning: '', afternoon: '', evening: '' };
+    let choices = { date: '', time: '', breakfast: '', lunch: '', cafe: '', dinner: '' };
+    let streetFoodItems = new Set();
 
+    // The Nancy Drew No Button Logic
     const noBtn = document.getElementById('no-btn');
     const card = document.getElementById('main-card');
     
-    // The clever sequence for the No button
     const funnyTexts = [
       "Are you sure? 🥺",
       "Think again! 🤔",
-      "It's not a Nancy Drew mystery, just say Yes! 🕵️‍♀️",
+      "This isn't a Nancy Drew mystery, just click Yes! 🕵️‍♀️",
       "Fine, catch me if you can! 🏃‍♀️"
     ];
     let hoverCount = 0;
 
     function handleNoButton(e) {
       if (e) e.preventDefault(); 
-
       if (hoverCount < funnyTexts.length) {
         noBtn.innerText = funnyTexts[hoverCount];
         hoverCount++;
       } else {
-        // Change from relative flow to absolute positioning bound strictly inside the card
         noBtn.style.position = 'absolute';
-        
-        // Calculate maximum allowed X and Y coordinates to prevent pushing the UI
-        const maxX = card.clientWidth - noBtn.clientWidth - 40; 
-        const maxY = card.clientHeight - noBtn.clientHeight - 40;
-        
-        const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-        
+        const maxX = card.clientWidth - noBtn.clientWidth - 30; 
+        const maxY = card.clientHeight - noBtn.clientHeight - 30;
+        const randomX = Math.max(15, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(15, Math.floor(Math.random() * maxY));
         noBtn.style.left = randomX + 'px';
         noBtn.style.top = randomY + 'px';
-        noBtn.style.width = 'auto'; // Shrink to fit text
+        noBtn.style.width = 'auto';
       }
     }
 
@@ -424,19 +455,26 @@
       handleNoButton();
     });
 
-    function nextStep(stepNumber) {
+    // Navigation Logic
+    function goToStep(stepNumber) {
       document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
       document.getElementById('step-' + stepNumber).classList.add('active');
     }
 
-    function saveDate() {
+    function startFlow() {
       const dateVal = document.getElementById('date-input').value;
-      if (!dateVal) {
-        alert('Please pick a date first! 🗓️');
+      const timeVal = document.getElementById('time-input').value;
+      if (!dateVal || !timeVal) {
+        alert('Please pick a date and meeting time! 🗓️');
         return;
       }
       choices.date = dateVal;
-      nextStep(3);
+      choices.time = timeVal;
+
+      // Dynamic flow based on meeting time
+      if (timeVal === 'Morning') goToStep(3);
+      else if (timeVal === 'Afternoon') goToStep(4);
+      else if (timeVal === 'Evening') goToStep(5);
     }
 
     function selectOption(category, value, element) {
@@ -444,31 +482,69 @@
       parent.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
       element.classList.add('selected');
       choices[category] = value;
+
+      // Handle Street food custom UI
+      if (category === 'dinner') {
+        const sfSelector = document.getElementById('street-food-selector');
+        if (value === 'Street Food Crawl') {
+          sfSelector.classList.add('visible');
+        } else {
+          sfSelector.classList.remove('visible');
+          streetFoodItems.clear(); // reset if they change mind
+          document.querySelectorAll('.food-chip').forEach(c => c.classList.remove('active'));
+        }
+      }
     }
 
-    function validateStep(category, nextStepNum) {
-      if (!choices[category]) {
-        alert('Please pick an option to continue! ✨');
-        return;
+    function toggleFood(element, item) {
+      if (streetFoodItems.has(item)) {
+        streetFoodItems.delete(item);
+        element.classList.remove('active');
+      } else {
+        streetFoodItems.add(item);
+        element.classList.add('active');
       }
-      nextStep(nextStepNum);
     }
 
     function generatePass() {
-      if (!choices.evening) {
+      if (!choices.dinner) {
         alert('Please pick our evening plans! 🌙');
         return;
       }
+
+      // If street food is selected, append the array of choices
+      if (choices.dinner === 'Street Food Crawl' && streetFoodItems.size > 0) {
+        choices.dinner = 'Street Food: ' + Array.from(streetFoodItems).join(', ');
+      }
       
       document.getElementById('pass-date').innerText = choices.date;
-      document.getElementById('pass-morning').innerText = choices.morning;
-      document.getElementById('pass-evening').innerText = choices.evening;
       
-      nextStep(6);
+      let finalMessage = `Hey! I've confirmed my Boarding Pass for our Jaipur Date! ✈️🥰%0A%0A📅 **Date:** ${choices.date}%0A🕒 **Meeting:** ${choices.time}%0A`;
 
-      const message = `Hey! I've confirmed my Boarding Pass for our Jaipur Date! ✈️🥰%0A%0A📅 **Date:** ${choices.date}%0A🌅 **Morning:** ${choices.morning}%0A🍲 **Afternoon:** ${choices.afternoon}%0A🌙 **Evening:** ${choices.evening}%0A%0AI can't wait!`;
-      const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
+      if (choices.time === 'Morning') {
+        if(!choices.breakfast) return alert('Select breakfast!');
+        document.getElementById('row-breakfast').classList.add('visible');
+        document.getElementById('pass-breakfast').innerText = choices.breakfast;
+        finalMessage += `🌅 **Breakfast:** ${choices.breakfast}%0A`;
+      }
+      if (choices.time === 'Morning' || choices.time === 'Afternoon') {
+        if(!choices.lunch) return alert('Select lunch!');
+        document.getElementById('row-lunch').classList.add('visible');
+        document.getElementById('pass-lunch').innerText = choices.lunch;
+        finalMessage += `🍲 **Lunch:** ${choices.lunch}%0A`;
+      }
       
+      if(!choices.cafe) return alert('Select a cafe!');
+      document.getElementById('row-cafe').classList.add('visible');
+      document.getElementById('pass-cafe').innerText = choices.cafe;
+      finalMessage += `☕ **Cafe:** ${choices.cafe}%0A`;
+
+      document.getElementById('pass-dinner').innerText = choices.dinner;
+      finalMessage += `🌙 **Dinner:** ${choices.dinner}%0A%0AI can't wait!`;
+      
+      goToStep(7);
+
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${finalMessage}`;
       document.getElementById('whatsapp-btn').onclick = () => {
         window.open(whatsappUrl, '_blank');
       };
