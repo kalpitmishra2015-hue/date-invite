@@ -1,118 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Special Question for You ✨</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Invitation for You ✨</title>
   <style>
+    /* Premium Romantic Theme & Global Styles */
     :root {
-      --bg-color: #fff0f5;
+      --bg-color: #fdf2f4; /* Softest pink */
       --card-bg: #ffffff;
-      --primary: #ff4d6d;
-      --primary-hover: #ff758f;
-      --text: #590d22;
-      --border: #ffb3c1;
+      --primary-romance: #ff4d6d; /* Dusty Rose */
+      --deep-romance: #800f2f; /* Burgundy */
+      --text-main: #590d22;
+      --gold-accent: #c9a050;
+      --border-color: #ffb3c1;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'optima', 'Segoe UI', serif; /* Use a romantic serif font if possible */
     }
 
     body {
       background-color: var(--bg-color);
-      color: var(--text);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      overflow: hidden; /* Prevents scrolling when button jumps */
     }
 
-    .card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
+    .container {
+      perspective: 1000px;
       width: 100%;
       max-width: 420px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      border: 2px solid var(--border);
     }
 
+    /* Main Card Styling */
+    .card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.1);
+      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: transform 0.6s ease;
+      position: relative;
+    }
+
+    /* Steps navigation logic */
     .step {
       display: none;
-      flex-direction: column;
-      gap: 1.2rem;
-      animation: fadeIn 0.4s ease-in-out;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .step.active {
       display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Typography */
+    h1 {
+      font-size: 2.2rem;
+      color: var(--deep-romance);
+      font-weight: 300;
+      margin-bottom: 0.5rem;
     }
 
-    h1, h2 {
-      color: var(--primary);
-      font-size: 1.5rem;
+    p.subtitle {
+      color: var(--primary-romance);
+      font-style: italic;
+      margin-bottom: 1rem;
     }
 
-    p {
-      color: #800f2f;
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
-
-    .btn-group {
+    /* The Buttons */
+    .btn-container {
       display: flex;
-      justify-content: center;
+      flex-direction: column-reverse; /* Crucial: No button is VISUALLY on top */
       gap: 1rem;
-      margin-top: 1rem;
-      min-height: 50px;
+      margin-top: 2rem;
+      min-height: 120px; /* Space for jumping button */
       position: relative;
     }
 
-    button, .option-btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 24px;
+    button {
+      padding: 15px 25px;
       border-radius: 50px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+      width: 100%;
     }
 
-    button:hover, .option-btn:hover {
-      background-color: var(--primary-hover);
-      transform: translateY(-2px);
+    #yes-btn {
+      background-color: var(--primary-romance);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
     }
 
+    #yes-btn:hover {
+      background-color: var(--deep-romance);
+      transform: scale(1.03);
+    }
+
+    /* The Evading No Button */
     #no-btn {
-      background-color: #a8a29e;
-      box-shadow: none;
+      background-color: #f1f1f1;
+      color: #888;
       position: absolute;
+      width: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
     }
 
+    /* Input & Option Styling */
     input[type="date"] {
       padding: 12px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
       outline: none;
       font-size: 1rem;
-      color: var(--text);
+      color: var(--text-main);
       width: 100%;
-      text-align: center;
     }
 
     .options-grid {
@@ -122,140 +143,169 @@
       text-align: left;
     }
 
-    .choice-card {
-      padding: 12px 16px;
-      border: 2px solid var(--border);
-      border-radius: 14px;
+    .option-card {
+      padding: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
       cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.95rem;
+      transition: all 0.2s ease;
       background: #fff;
     }
 
-    .choice-card:hover, .choice-card.selected {
-      border-color: var(--primary);
-      background-color: #ffe5ec;
+    .option-card:hover, .option-card.selected {
+      border-color: var(--primary-romance);
+      background-color: var(--bg-color);
     }
 
-    .cat-gif {
-      width: 140px;
-      height: 140px;
-      margin: 0 auto;
-      object-fit: cover;
-      border-radius: 50%;
+    .option-card b {
+      color: var(--deep-romance);
+    }
+
+    /* WhatsApp Button */
+    #whatsapp-btn {
+      background-color: #25D366;
+      color: white;
+      margin-top: 1rem;
+    }
+
+    /* Romantic Decorations (Simple) */
+    .heart-icon {
+      font-size: 3rem;
+      color: var(--primary-romance);
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <!-- STEP 1: The Question -->
-    <div id="step-1" class="step active">
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWRyeTByY2R1eDVmb3p3Nm52ZW9yZWpuaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cLS1cf3xm389R72143/giphy.gif" alt="Cute cat" class="cat-gif" />
-      <h1>Will you go on a date with me? 🌹</h1>
-      <p>I promise good food, great views, and top-tier company in Jaipur!</p>
-      <div class="btn-group" id="btn-container">
-        <button id="yes-btn" onclick="nextStep(2)">Yes! 🥰</button>
-        <button id="no-btn" onmouseover="moveButton()" onclick="moveButton()">No 😢</button>
-      </div>
-    </div>
-
-    <!-- STEP 2: Pick the Date -->
-    <div id="step-2" class="step">
-      <h2>When are you free? 📅</h2>
-      <p>Pick a date that works best for you!</p>
-      <input type="date" id="date-input" min="" />
-      <button onclick="saveDate()">Next Step ➔</button>
-    </div>
-
-    <!-- STEP 3: Jaipur Date Type -->
-    <div id="step-3" class="step">
-      <h2>What kind of vibe? ✨</h2>
-      <p>Select what you're in the mood for:</p>
-      <div class="options-grid">
-        <div class="choice-card" onclick="selectOption('type', 'Sunset & Nahargarh Fort view watching 🌅', this)">
-          🌅 <b>Sunset & Skyline</b> — Watching sunset over Pink City from Nahargarh
-        </div>
-        <div class="choice-card" onclick="selectOption('type', 'Aesthetic Cafe & Coffee Date ☕', this)">
-          ☕ <b>Aesthetic Cafe</b> — Coffee & desserts at C-Scheme / Amer
-        </div>
-        <div class="choice-card" onclick="selectOption('type', 'Cozy Bookstore & Stray Cat Spotting 📚🐱', this)">
-          📚 <b>Bookstore & Cats</b> — Browsing books, coffee & cat watching
-        </div>
-        <div class="choice-card" onclick="selectOption('type', 'Romantic Dinner Night 🍽️', this)">
-          🍽️ <b>Romantic Dinner</b> — Pretty rooftop ambiance & candle light
+  <div class="container">
+    <div class="card" id="main-card">
+      
+      <!-- STEP 1: The Main Question -->
+      <div id="step-1" class="step active">
+        <div class="heart-icon">💖</div>
+        <h1>Will you go on a date with me?</h1>
+        <p class="subtitle">A magical evening awaits you in Jaipur...</p>
+        
+        <div class="btn-container" id="btn-container">
+          <!-- The Yes button is below in HTML, above visually -->
+          <button id="yes-btn" onclick="nextStep(2)">Yes! 🥰</button>
+          
+          <!-- The NO button is unclickable and evades -->
+          <button id="no-btn" onmouseover="evadeButton()" onclick="evadeButton()">No 😢</button>
         </div>
       </div>
-      <button onclick="validateStep3()">Next Step ➔</button>
-    </div>
 
-    <!-- STEP 4: Food / Cuisine -->
-    <div id="step-4" class="step">
-      <h2>What are we eating? 🍕</h2>
-      <p>Pick your favorite treat:</p>
-      <div class="options-grid">
-        <div class="choice-card" onclick="selectOption('food', 'Italian & Woodfired Pizza 🍕', this)">
-          🍕 <b>Italian</b> — Artisanal pizza & pasta
-        </div>
-        <div class="choice-card" onclick="selectOption('food', 'Rajasthani Thali & Local Eats 🍲', this)">
-          🍲 <b>Authentic Rajasthani</b> — Royal feast & local flavors
-        </div>
-        <div class="choice-card" onclick="selectOption('food', 'Asian & Dim Sums 🥢', this)">
-          🥢 <b>Asian / Sushi</b> — Dumplings, noodles & boba
-        </div>
-        <div class="choice-card" onclick="selectOption('food', 'Desserts, Bakery & Coffee 🍰', this)">
-          🍰 <b>Cafe Fare</b> — Pancakes, pastries & cold brew
-        </div>
+      <!-- STEP 2: Calendar Pick -->
+      <div id="step-2" class="step">
+        <h2>Pick a magical date 📅</h2>
+        <p>When are you free for our adventure?</p>
+        <input type="date" id="date-input" min="">
+        <button id="yes-btn" onclick="saveDate()">Next ➔</button>
       </div>
-      <button onclick="finishApp()">Send Choices to Him 💌</button>
-    </div>
 
-    <!-- STEP 5: Final Screen -->
-    <div id="step-5" class="step">
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1ZHBsY2s4cnF3ZGRkcWdqM3F3cWlhcmM2MW45ZXA3Y3J6c3pxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat" class="cat-gif" />
-      <h2>Yay! It's a date! 🎉</h2>
-      <p>Click below to send your selections over WhatsApp!</p>
-      <button id="whatsapp-btn" style="background-color: #25D366;">Send on WhatsApp 💬</button>
+      <!-- STEP 3: Jaipur Date Type -->
+      <div id="step-3" class="step">
+        <h2>What's the vibe? ✨</h2>
+        <p>Choose your Jaipur experience:</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('type', 'Sunset at Nahargarh', this)">
+            🌅 <b>Nahargarh Sunset</b> — Watching the city lights switch on from the fort.
+          </div>
+          <div class="option-card" onclick="selectOption('type', 'Aesthetic Cafe Hop', this)">
+            ☕ <b>Cafe Hop</b> — Coffee & desserts at a beautiful C-Scheme cafe.
+          </div>
+          <div class="option-card" onclick="selectOption('type', 'Pink City Stroll', this)">
+            🌸 <b>City Stroll</b> — Wandering through Hawa Mahal & City Palace area.
+          </div>
+          <div class="option-card" onclick="selectOption('type', 'Stepwell Evening', this)">
+            🕍 <b>Stepwell Quiet</b> — A peaceful evening by an ancient stepwell.
+          </div>
+        </div>
+        <button id="yes-btn" onclick="validateStep3()">Next ➔</button>
+      </div>
+
+      <!-- STEP 4: Cuisine -->
+      <div id="step-4" class="step">
+        <h2>What are we eating? 🍕</h2>
+        <p>Pick your favorite flavors:</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('food', 'Rajasthani Thali', this)">
+            🍲 <b>Traditional Thali</b> — Royal feast of Dal Baati Churma.
+          </div>
+          <div class="option-card" onclick="selectOption('food', 'Authentic Pizza', this)">
+            🍕 <b>Cozy Italian</b> — Wood-fired pizza & pasta date.
+          </div>
+          <div class="option-card" onclick="selectOption('food', 'Cafe Food & Desserts', this)">
+            🍰 <b>Cafe Fare</b> — Light bites, pancakes, and gourmet coffee.
+          </div>
+        </div>
+        <button id="yes-btn" onclick="finishApp()">It's a date! 💌</button>
+      </div>
+
+      <!-- STEP 5: Final Confirmation -->
+      <div id="step-5" class="step">
+        <div class="heart-icon">🎉</div>
+        <h1>Yay!</h1>
+        <p>I can't wait. Send your choices to me!</p>
+        <button id="whatsapp-btn">Send on WhatsApp 💬</button>
+      </div>
+
     </div>
   </div>
 
   <script>
     // Set minimum date to today
-    document.getElementById('date-input').min = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date-input').min = today;
 
     let selectedDate = '';
     let selectedType = '';
     let selectedFood = '';
 
-    // Evading "No" Button Logic
-    function moveButton() {
-      const btn = document.getElementById('no-btn');
+    // --- The Clever "No" Button Evasion ---
+    function evadeButton() {
+      const noBtn = document.getElementById('no-btn');
       const container = document.getElementById('btn-container');
-      const card = document.querySelector('.card');
-
+      const card = document.getElementById('main-card');
+      
+      // Calculate boundaries based on the CARD, not viewport
       const cardRect = card.getBoundingClientRect();
-      const btnRect = btn.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
 
-      // Calculate random positions within the card body
-      const maxX = cardRect.width - btnRect.width - 40;
-      const maxY = cardRect.height - btnRect.height - 40;
+      // Ensure the button stays somewhat centered and within the card padding
+      const padding = 20;
+      const maxX = cardRect.width - btnRect.width - (padding * 2);
+      const maxY = cardRect.height - btnRect.height - (padding * 2);
 
-      const randomX = Math.floor(Math.random() * maxX) - (cardRect.width / 2) + 60;
-      const randomY = Math.floor(Math.random() * maxY) - (cardRect.height / 2) + 60;
+      // Generate random positions
+      const randomX = Math.floor(Math.random() * maxX) + padding;
+      const randomY = Math.floor(Math.random() * maxY) + padding;
 
-      btn.style.left = `${randomX}px`;
-      btn.style.top = `${randomY}px`;
+      // Apply the new position relative to the container
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+      noBtn.style.transform = 'none'; // Remove centering transform
     }
 
+    // Handle button events for mobile touch too
+    const noBtn = document.getElementById('no-btn');
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // Prevents clicking
+      evadeButton();
+    });
+
+
+    // --- Navigation Logic ---
     function nextStep(stepNumber) {
       document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-      document.getElementById(`step-${stepNumber}`).classList.add('active');
+      document.getElementById('step-' + stepNumber).classList.add('active');
     }
 
     function saveDate() {
       const dateVal = document.getElementById('date-input').value;
       if (!dateVal) {
-        alert('Please pick a date first! 🗓️');
+        alert('Please pick a date for our adventure! 🗓️');
         return;
       }
       selectedDate = dateVal;
@@ -263,34 +313,39 @@
     }
 
     function selectOption(category, value, element) {
+      // Highlight selection
       const parent = element.parentElement;
-      parent.querySelectorAll('.choice-card').forEach(el => el.classList.remove('selected'));
+      parent.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
       element.classList.add('selected');
 
+      // Save selection
       if (category === 'type') selectedType = value;
       if (category === 'food') selectedFood = value;
     }
 
     function validateStep3() {
       if (!selectedType) {
-        alert('Please choose a date style! ✨');
+        alert('Please pick a vibe! ✨');
         return;
       }
       nextStep(4);
     }
 
+    // --- Finalization & WhatsApp Message ---
     function finishApp() {
       if (!selectedFood) {
-        alert('Please select a food preference! 🍕');
+        alert('Please select what we are eating! 🍕');
         return;
       }
       nextStep(5);
 
-      const message = `Hey! I'd love to go out with you! 🥰%0A%0A📅 **Date:** ${selectedDate}%0A✨ **Vibe:** ${selectedType}%0A🍕 **Food:** ${selectedFood}`;
+      // Create the romantic message
+      const message = `Hey! I'd love to go on a date with you! 🥰%0A%0AHere are my choices:%0A%0A📅 **Date:** ${selectedDate}%0A✨ **Vibe:** ${selectedType}%0A🍕 **Food:** ${selectedFood}%0A%0ACan't wait!`;
       
-      // Replace with your real phone number if you want direct messaging (e.g. 919876543210)
+      // WhatsApp API Link
       const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
       
+      // Set the button action
       document.getElementById('whatsapp-btn').onclick = () => {
         window.open(whatsappUrl, '_blank');
       };
